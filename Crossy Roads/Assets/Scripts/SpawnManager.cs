@@ -25,6 +25,7 @@ public class SpawnManager : MonoBehaviour
         InvokeRepeating("SpawnVehiclesFromLeft", startDelay, randomRightInterval);
     }
 
+    // This method spawns vehicles from spawning points on right side
     void SpawnVehiclesFromRight()
     {
         if(playerScript.gameOver == false)
@@ -40,6 +41,7 @@ public class SpawnManager : MonoBehaviour
         }  
     }
 
+    // This method spawns vehicles from spawning points on left side
     void SpawnVehiclesFromLeft()
     {
         if (playerScript.gameOver == false)

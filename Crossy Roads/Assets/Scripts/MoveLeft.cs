@@ -14,6 +14,7 @@ public class MoveLeft : MonoBehaviour
         DestroyOutOfBounds();
     }
 
+    // This method destroys the vehicle when it's outside the left bounds
     void DestroyOutOfBounds()
     {
         if(transform.position.x < -boundry)

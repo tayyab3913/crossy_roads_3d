@@ -14,6 +14,7 @@ public class MoveRight : MonoBehaviour
         DestroyOutOfBounds();
     }
 
+    // This method destroys vehicles when they are outside the right bounds
     void DestroyOutOfBounds()
     {
         if(transform.position.x > boundry)

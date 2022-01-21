@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
         StayInbounds();
     }
 
+    // This method jumps the player and moves it the direction of the arrow pressed
     void PlayerMovementByJump()
     {
         if(Input.GetKey(KeyCode.LeftArrow) && isGrounded)
@@ -76,18 +77,9 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
             ImpulseDirection(Vector3.back);
         }
-
-        //horizontalInput = Input.GetAxis("Horizontal");
-        //verticalInput = Input.GetAxis("Vertical");
-        //transform.Translate(Vector3.right * Time.deltaTime * horizontalInput * movementSpeed);
-        //transform.Translate(Vector3.forward * Time.deltaTime * verticalInput * movementSpeed);
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Jump();
-        }
     }
 
+    // This method keeps the player from getting out of playable boundry
     void StayInbounds()
     {
         if(transform.position.x < -boundry)
@@ -96,19 +88,28 @@ public class PlayerController : MonoBehaviour
         } else if (transform.position.x > boundry)
         {
             transform.position = new Vector3(boundry, transform.position.y, transform.position.z);
+        } else if (transform.position.z < -15)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, -15);
+        } else if(transform.position.z > 170)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, 170);
         }
     }
 
+    // This method allows the player to jump by using impulse
     void Jump()
     {
         playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
+    // This method allows the player to move in a direction using impulse
     void ImpulseDirection(Vector3 direction)
     {
         playerRb.AddForce(direction * directionalForce, ForceMode.Impulse);
     }
 
+    // This method checks if the player has landed on ground
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Ground"))
@@ -117,6 +118,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // This method is called when the player dies
+    // The player crashes high in the sky and the game is over
     public void PlayerDied()
     {
         playerRb.AddForce(Vector3.up * 2000, ForceMode.Impulse);
@@ -124,6 +127,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("!!! Game Over !!!");
     }
 
+    // This method is used to switch between cameras
     void SwitchCamera()
     {
         if(Input.GetKeyDown(KeyCode.K))
@@ -133,6 +137,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // This method is used to Initialize the player by the spawn manager when the game starts
     public void InitializePlayer(GameObject camera, GameObject sCamera, float speed, float jForce, float dForce, float xOffset, float yOffset, float zOffset, float gModifier, float inputBoundry)
     {
         cameraToFollow = camera;
